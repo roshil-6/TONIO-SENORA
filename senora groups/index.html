@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tonio & Senora Migration Law Firm provides expert immigration services for Australia, Canada, and New Zealand. Professional visa assistance and document management.">
+    <title>Tonio & Senora Migration Law Firm - Expert Immigration Services</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="application-name" content="TonioSenora">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="TonioSenora">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <meta name="msapplication-TileColor" content="#4A0E4E">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="theme-color" content="#4A0E4E">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512x512.png">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <link rel="shortcut icon" href="icons/icon-192x192.png">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo">
+                    <div class="logo-line-top">
+                        <span class="logo-tonio">tonio</span>
+                        <span class="logo-ampersand">&</span>
+                    </div>
+                    <span class="logo-senora">senora</span>
+                </div>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <div class="nav-buttons">
+                    <button class="btn btn-outline" onclick="showLoginModal()">Login</button>
+                    <button class="btn btn-primary" onclick="showRegisterModal()">Get Started</button>
+                </div>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Your Migration Journey Starts Here</h1>
+                <p class="hero-subtitle">Expert legal guidance for Australia, Canada, New Zealand, and Student Visas. Let us help you navigate your path to a new beginning.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary btn-large" onclick="showRegisterModal()">Start Your Application</button>
+                    <button class="btn btn-outline btn-large" onclick="scrollToSection('services')">Learn More</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-card">
+                    <i class="fas fa-globe-americas"></i>
+                    <h3>Global Reach</h3>
+                    <p>Expertise across multiple countries</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">Our Comprehensive Services</h2>
+            <p class="section-subtitle">Expert migration law services across multiple countries and visa categories</p>
+            
+            <!-- Country-Specific Services -->
+            <div class="services-category">
+                <h3 class="category-title">Country-Specific Immigration Services</h3>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3>Australia Immigration</h3>
+                        <ul>
+                            <li><strong>Skilled Migration (GSM)</strong> - Subclass 189, 190, 491</li>
+                            <li><strong>Employer Sponsored</strong> - Subclass 482, 186, 187</li>
+                            <li><strong>Business & Investment</strong> - Subclass 188, 888, 132</li>
+                            <li><strong>Family Visas</strong> - Partner, Parent, Child visas</li>
+                            <li><strong>Student Visas</strong> - Subclass 500, 485</li>
+                            <li><strong>DAMA Programs</strong> - Designated Area Migration Agreements</li>
+                            <li><strong>Global Talent</strong> - Subclass 858</li>
+                        </ul>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <h3>Canada Immigration</h3>
+                        <ul>
+                            <li><strong>Express Entry</strong> - Federal Skilled Worker, CEC, FST</li>
+                            <li><strong>Provincial Nominee Program (PNP)</strong> - All provinces</li>
+                            <li><strong>Family Sponsorship</strong> - Spouse, children, parents</li>
+                            <li><strong>Business Immigration</strong> - Start-up Visa, Investor programs</li>
+                            <li><strong>Study Permits</strong> - Student visa applications</li>
+                            <li><strong>Work Permits</strong> - LMIA, LMIA-exempt categories</li>
+                            <li><strong>Refugee & Humanitarian</strong> - Asylum applications</li>
+                        </ul>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-mountain"></i>
+                        </div>
+                        <h3>New Zealand Immigration</h3>
+                        <ul>
+                            <li><strong>Skilled Migrant Category</strong> - Points-based system</li>
+                            <li><strong>Essential Skills Work Visa</strong> - Employment-based</li>
+                            <li><strong>Family Category</strong> - Partner, parent, child visas</li>
+                            <li><strong>Business Immigration</strong> - Investor, entrepreneur visas</li>
+                            <li><strong>Student Visas</strong> - Study permit applications</li>
+                            <li><strong>Resident Visas</strong> - Permanent residence pathways</li>
+                            <li><strong>Health Care Workers</strong> - Specialized healthcare visas</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Specialized Services -->
+            <div class="services-category">
+                <h3 class="category-title">Specialized Legal Services</h3>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3>Student Visa Services</h3>
+                        <ul>
+                            <li><strong>Visa Application</strong> - Complete application process</li>
+                            <li><strong>Document Preparation</strong> - Academic transcripts, financial proof</li>
+                            <li><strong>GTE Statement</strong> - Genuine Temporary Entrant documentation</li>
+                            <li><strong>OSHC Arrangement</strong> - Health insurance setup</li>
+                            <li><strong>Visa Extensions</strong> - Course completion extensions</li>
+                            <li><strong>Post-Study Work</strong> - Graduate visa applications</li>
+                        </ul>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Family Reunion Services</h3>
+                        <ul>
+                            <li><strong>Partner Visas</strong> - Spouse and de facto applications</li>
+                            <li><strong>Parent Visas</strong> - Contributory and non-contributory</li>
+                            <li><strong>Child Visas</strong> - Dependent child applications</li>
+                            <li><strong>Relationship Evidence</strong> - Documentation preparation</li>
+                            <li><strong>Sponsorship Applications</strong> - Sponsor eligibility assessment</li>
+                            <li><strong>Appeal Services</strong> - Visa refusal appeals</li>
+                        </ul>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <h3>Business Immigration</h3>
+                        <ul>
+                            <li><strong>Investor Visas</strong> - Significant investor programs</li>
+                            <li><strong>Entrepreneur Visas</strong> - Business establishment</li>
+                            <li><strong>Start-up Visas</strong> - Innovation and entrepreneurship</li>
+                            <li><strong>Business Plans</strong> - Comprehensive business documentation</li>
+                            <li><strong>Financial Documentation</strong> - Asset verification</li>
+                            <li><strong>Compliance Support</strong> - Ongoing business compliance</li>
+                        </ul>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Legal Support Services</h3>
+                        <ul>
+                            <li><strong>Visa Refusals</strong> - Appeal and review processes</li>
+                            <li><strong>Character Issues</strong> - Criminal record assessments</li>
+                            <li><strong>Health Waivers</strong> - Medical condition exemptions</li>
+                            <li><strong>Age Exemptions</strong> - Age limit waiver applications</li>
+                            <li><strong>Compliance Issues</strong> - Visa condition breaches</li>
+                            <li><strong>Court Representation</strong> - Administrative Appeals Tribunal</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Document Services -->
+            <div class="services-category">
+                <h3 class="category-title">Document & Application Services</h3>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3>Document Preparation</h3>
+                        <ul>
+                            <li><strong>Skills Assessment</strong> - ACS, Engineers Australia, VETASSESS</li>
+                            <li><strong>Educational Credentials</strong> - Degree verification, transcripts</li>
+                            <li><strong>Employment References</strong> - Detailed work experience documentation</li>
+                            <li><strong>English Language Tests</strong> - IELTS, PTE, TOEFL preparation</li>
+                            <li><strong>Police Clearances</strong> - International police certificate applications</li>
+                            <li><strong>Medical Examinations</strong> - Panel physician appointments</li>
+                        </ul>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <h3>Application Management</h3>
+                        <ul>
+                            <li><strong>Complete Application</strong> - End-to-end visa processing</li>
+                            <li><strong>Document Review</strong> - Comprehensive document verification</li>
+                            <li><strong>Lodgment Services</strong> - Professional application submission</li>
+                            <li><strong>Progress Tracking</strong> - Real-time application monitoring</li>
+                            <li><strong>Correspondence Management</strong> - Government communication handling</li>
+                            <li><strong>Visa Grant Assistance</strong> - Post-approval support services</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About Tonio & Senora</h2>
+                    <p>With years of experience in migration law, we provide comprehensive legal services to help you achieve your migration goals. Our team of experts understands the complexities of immigration processes and is committed to delivering exceptional results.</p>
+                    <div class="stats">
+                        <div class="stat">
+                            <h3>Expert</h3>
+                            <p>Legal Guidance</p>
+                        </div>
+                        <div class="stat">
+                            <h3>Personalized</h3>
+                            <p>Service Approach</p>
+                        </div>
+                        <div class="stat">
+                            <h3>24/7</h3>
+                            <p>Client Support</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div style="width: 300px; height: 300px; background: linear-gradient(135deg, #D4AF37, #4A0E4E); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-users" style="font-size: 4rem; color: white;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>+971 56 972 3504</p>
+                            <p>+971 54 207 7070</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>info@tonioandsenora.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Address</h4>
+                            <p>Dubai, United Arab Emirates<br>Migration Law Specialists</p>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Your Message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="logo">
+                        <div class="logo-line-top">
+                            <span class="logo-tonio">tonio</span>
+                            <span class="logo-ampersand">&</span>
+                        </div>
+                        <span class="logo-senora">senora</span>
+                    </div>
+                    <p>Your trusted migration law partners</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#home">Home</a>
+                    <a href="#services">Services</a>
+                    <a href="#about">About</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Tonio & Senora. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Login</button>
+                <p class="form-switch">Don't have an account? <a href="#" onclick="switchToRegister()">Register here</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('registerModal')">&times;</span>
+            <h2>Register</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerName">Full Name</label>
+                    <input type="text" id="registerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Password</label>
+                    <input type="password" id="registerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerType">Account Type</label>
+                    <select id="registerType" required>
+                        <option value="">Select Account Type</option>
+                        <option value="client">Client</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Register</button>
+                <p class="form-switch">Already have an account? <a href="#" onclick="switchToLogin()">Login here</a></p>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

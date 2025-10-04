@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Complete Test - Tonio & Senora</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="application-name" content="TonioSenora">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="TonioSenora">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <meta name="msapplication-TileColor" content="#4A0E4E">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="theme-color" content="#4A0E4E">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512x512.png">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <link rel="shortcut icon" href="icons/icon-192x192.png">
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: linear-gradient(135deg, #D4AF37, #2A2A2A);
+            color: white;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        .logo {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+        .logo .top { color: #D4AF37; }
+        .logo .bottom { color: #FFFFFF; margin-left: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); font-weight: bold; }
+        .status {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .pass { border-left: 5px solid #4CAF50; }
+        .fail { border-left: 5px solid #f44336; }
+        .warning { border-left: 5px solid #ff9800; }
+        button {
+            background: white;
+            color: #4A0E4E;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        .score {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .score.pass { color: #4CAF50; }
+        .score.warning { color: #ff9800; }
+        .score.fail { color: #f44336; }
+        .instructions {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <div class="top">tonio &</div>
+            <div class="bottom">senora</div>
+        </div>
+        
+        <h1>🚀 PWA Complete Test</h1>
+        <p>This page tests your complete PWA implementation for 100% score.</p>
+        
+        <div class="instructions">
+            <h3>📋 Before Testing:</h3>
+            <ol>
+                <li>Open <code>create-pwa-icons.html</code> and generate both icon files</li>
+                <li>Download the 192x192 and 512x512 PNG files</li>
+                <li>Place them in the <code>icons/</code> folder</li>
+                <li>Refresh this page to see 100% PWA score</li>
+            </ol>
+        </div>
+        
+        <div class="test-section">
+            <h2>🔍 PWA Validation</h2>
+            <button onclick="runCompleteValidation()">🔍 Run Complete PWA Validation</button>
+            <button onclick="testServiceWorker()">📱 Test Service Worker</button>
+            <button onclick="testInstallPrompt()">⬇️ Test Install Prompt</button>
+            <button onclick="testOfflineMode()">🌐 Test Offline Mode</button>
+        </div>
+        
+        <div id="results"></div>
+    </div>
+
+    <script>
+        // Complete PWA Validation
+        function runCompleteValidation() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<h2>🔍 Complete PWA Validation Results</h2>';
+            
+            const tests = [
+                {
+                    name: 'Web App Manifest',
+                    test: () => {
+                        const manifest = document.querySelector('link[rel="manifest"]');
+                        return manifest && manifest.href === 'manifest.json';
+                    },
+                    fix: 'Manifest is properly linked'
+                },
+                {
+                    name: 'Service Worker Support',
+                    test: () => 'serviceWorker' in navigator,
+                    fix: 'Service Worker API is supported'
+                },
+                {
+                    name: 'PWA Icons (192x192)',
+                    test: () => {
+                        const icon192 = document.querySelector('link[rel="icon"][sizes="192x192"]');
+                        return icon192 && icon192.href === 'icons/icon-192x192.png';
+                    },
+                    fix: 'Generate 192x192 icon using create-pwa-icons.html'
+                },
+                {
+                    name: 'PWA Icons (512x512)',
+                    test: () => {
+                        const icon512 = document.querySelector('link[rel="icon"][sizes="512x512"]');
+                        return icon512 && icon512.href === 'icons/icon-512x512.png';
+                    },
+                    fix: 'Generate 512x512 icon using create-pwa-icons.html'
+                },
+                {
+                    name: 'Theme Color',
+                    test: () => {
+                        const theme = document.querySelector('meta[name="theme-color"]');
+                        return theme && theme.content === '#4A0E4E';
+                    },
+                    fix: 'Theme color is properly set'
+                },
+                {
+                    name: 'Viewport Meta',
+                    test: () => {
+                        const viewport = document.querySelector('meta[name="viewport"]');
+                        return viewport && viewport.content.includes('width=device-width');
+                    },
+                    fix: 'Viewport meta tag is properly configured'
+                },
+                {
+                    name: 'Apple Touch Icon',
+                    test: () => {
+                        const appleIcon = document.querySelector('link[rel="apple-touch-icon"]');
+                        return appleIcon;
+                    },
+                    fix: 'Apple touch icon is configured'
+                },
+                {
+                    name: 'Application Name',
+                    test: () => {
+                        const appName = document.querySelector('meta[name="application-name"]');
+                        return appName && appName.content === 'TonioSenora';
+                    },
+                    fix: 'Application name is properly set'
+                },
+                {
+                    name: 'Mobile Web App Capable',
+                    test: () => {
+                        const mobileCapable = document.querySelector('meta[name="mobile-web-app-capable"]');
+                        return mobileCapable && mobileCapable.content === 'yes';
+                    },
+                    fix: 'Mobile web app capability is enabled'
+                },
+                {
+                    name: 'Apple Mobile Web App',
+                    test: () => {
+                        const appleCapable = document.querySelector('meta[name="apple-mobile-web-app-capable"]');
+                        return appleCapable && appleCapable.content === 'yes';
+                    },
+                    fix: 'Apple mobile web app capability is enabled'
+                }
+            ];
+            
+            let passed = 0;
+            let total = tests.length;
+            
+            tests.forEach(test => {
+                const result = test.test();
+                if (result) passed++;
+                
+                const div = document.createElement('div');
+                div.className = `status ${result ? 'pass' : 'fail'}`;
+                div.innerHTML = `
+                    <span><strong>${result ? '✅' : '❌'} ${test.name}</strong><br><small>${test.fix}</small></span>
+                    <span>${result ? 'PASS' : 'FAIL'}</span>
+                `;
+                results.appendChild(div);
+            });
+            
+            // Overall score
+            const score = Math.round((passed / total) * 100);
+            const scoreDiv = document.createElement('div');
+            scoreDiv.className = `score ${score >= 90 ? 'pass' : score >= 70 ? 'warning' : 'fail'}`;
+            scoreDiv.innerHTML = `
+                📊 Overall PWA Score: ${score}% (${passed}/${total} checks passed)
+                <br>
+                ${score >= 90 ? '🎉 EXCELLENT! PWA is ready for deployment!' : 
+                  score >= 70 ? '⚠️ GOOD - Minor improvements needed' : 
+                  '❌ NEEDS WORK - Generate icons to fix remaining issues'}
+            `;
+            results.appendChild(scoreDiv);
+        }
+        
+        function testServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('sw.js')
+                    .then(registration => {
+                        alert('✅ Service Worker registered successfully!\n\nScope: ' + registration.scope);
+                    })
+                    .catch(error => {
+                        alert('❌ Service Worker registration failed:\n\n' + error.message + '\n\nNote: This is expected when running from file:// protocol');
+                    });
+            } else {
+                alert('❌ Service Worker not supported in this browser');
+            }
+        }
+        
+        function testInstallPrompt() {
+            if ('serviceWorker' in navigator) {
+                alert('✅ PWA install prompt should appear in supported browsers!\n\nNote: Install prompt may not appear when running from file:// protocol\n\nFor full testing, deploy to HTTPS server');
+            } else {
+                alert('⚠️ PWA install prompt may not appear in this browser');
+            }
+        }
+        
+        function testOfflineMode() {
+            if ('serviceWorker' in navigator) {
+                alert('✅ Offline mode will work after Service Worker registration!\n\nNote: Full offline functionality requires HTTPS deployment');
+            } else {
+                alert('❌ Offline mode not supported in this browser');
+            }
+        }
+        
+        // Auto-run validation on page load
+        window.onload = function() {
+            setTimeout(runCompleteValidation, 1000);
+        };
+    </script>
+</body>
+</html>
+
+

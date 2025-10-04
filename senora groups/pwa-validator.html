@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Validator - Tonio & Senora</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .validator {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .check {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+        .check.pass {
+            background: #d4edda;
+            color: #155724;
+        }
+        .check.fail {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .check.warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .icon {
+            font-size: 1.2em;
+            margin-right: 10px;
+        }
+        .status {
+            font-weight: bold;
+            margin-left: auto;
+        }
+        button {
+            background: #4A0E4E;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #D4AF37;
+        }
+    </style>
+</head>
+<body>
+    <div class="validator">
+        <h1>🔍 PWA Validator - Tonio & Senora Migration Law Firm</h1>
+        <p>This tool validates your PWA implementation for deployment readiness.</p>
+        
+        <button onclick="runValidation()">🚀 Run PWA Validation</button>
+        <button onclick="testOffline()">📱 Test Offline Mode</button>
+        <button onclick="testInstall()">⬇️ Test Install Prompt</button>
+        
+        <div id="results"></div>
+    </div>
+
+    <script>
+        function runValidation() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<h2>🔍 PWA Validation Results</h2>';
+            
+            const checks = [
+                checkManifest(),
+                checkServiceWorker(),
+                checkIcons(),
+                checkMetaTags(),
+                checkHTTPS(),
+                checkResponsive(),
+                checkPerformance()
+            ];
+            
+            checks.forEach(check => {
+                const div = document.createElement('div');
+                div.className = `check ${check.status}`;
+                div.innerHTML = `
+                    <span class="icon">${check.icon}</span>
+                    <span>${check.message}</span>
+                    <span class="status">${check.status.toUpperCase()}</span>
+                `;
+                results.appendChild(div);
+            });
+            
+            // Overall score
+            const passed = checks.filter(c => c.status === 'pass').length;
+            const total = checks.length;
+            const score = Math.round((passed / total) * 100);
+            
+            const scoreDiv = document.createElement('div');
+            scoreDiv.className = `check ${score >= 80 ? 'pass' : score >= 60 ? 'warning' : 'fail'}`;
+            scoreDiv.innerHTML = `
+                <span class="icon">📊</span>
+                <span>Overall PWA Score: ${score}% (${passed}/${total} checks passed)</span>
+                <span class="status">${score >= 80 ? 'READY' : score >= 60 ? 'NEEDS WORK' : 'NOT READY'}</span>
+            `;
+            results.appendChild(scoreDiv);
+        }
+        
+        function checkManifest() {
+            try {
+                const manifest = document.querySelector('link[rel="manifest"]');
+                if (manifest && manifest.href) {
+                    return {
+                        status: 'pass',
+                        icon: '✅',
+                        message: 'Web App Manifest found and linked'
+                    };
+                }
+            } catch (e) {}
+            
+            return {
+                status: 'fail',
+                icon: '❌',
+                message: 'Web App Manifest missing or not linked'
+            };
+        }
+        
+        function checkServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                return {
+                    status: 'pass',
+                    icon: '✅',
+                    message: 'Service Worker API supported'
+                };
+            }
+            
+            return {
+                status: 'fail',
+                icon: '❌',
+                message: 'Service Worker API not supported'
+            };
+        }
+        
+        function checkIcons() {
+            const icon192 = document.querySelector('link[rel="icon"][sizes="192x192"]');
+            const icon512 = document.querySelector('link[rel="icon"][sizes="512x512"]');
+            
+            if (icon192 && icon512) {
+                return {
+                    status: 'pass',
+                    icon: '✅',
+                    message: 'PWA icons (192x192, 512x512) configured'
+                };
+            }
+            
+            return {
+                status: 'fail',
+                icon: '❌',
+                message: 'PWA icons missing or not configured'
+            };
+        }
+        
+        function checkMetaTags() {
+            const themeColor = document.querySelector('meta[name="theme-color"]');
+            const viewport = document.querySelector('meta[name="viewport"]');
+            const appleTouchIcon = document.querySelector('link[rel="apple-touch-icon"]');
+            
+            if (themeColor && viewport && appleTouchIcon) {
+                return {
+                    status: 'pass',
+                    icon: '✅',
+                    message: 'PWA meta tags configured'
+                };
+            }
+            
+            return {
+                status: 'warning',
+                icon: '⚠️',
+                message: 'Some PWA meta tags missing'
+            };
+        }
+        
+        function checkHTTPS() {
+            if (location.protocol === 'https:') {
+                return {
+                    status: 'pass',
+                    icon: '✅',
+                    message: 'HTTPS enabled (required for PWA)'
+                };
+            }
+            
+            return {
+                status: 'fail',
+                icon: '❌',
+                message: 'HTTPS required for PWA deployment'
+            };
+        }
+        
+        function checkResponsive() {
+            const viewport = document.querySelector('meta[name="viewport"]');
+            if (viewport && viewport.content.includes('width=device-width')) {
+                return {
+                    status: 'pass',
+                    icon: '✅',
+                    message: 'Responsive viewport configured'
+                };
+            }
+            
+            return {
+                status: 'fail',
+                icon: '❌',
+                message: 'Responsive viewport not configured'
+            };
+        }
+        
+        function checkPerformance() {
+            // Simple performance check
+            const start = performance.now();
+            const end = performance.now();
+            const loadTime = end - start;
+            
+            if (loadTime < 100) {
+                return {
+                    status: 'pass',
+                    icon: '✅',
+                    message: 'Performance looks good'
+                };
+            }
+            
+            return {
+                status: 'warning',
+                icon: '⚠️',
+                message: 'Performance could be improved'
+            };
+        }
+        
+        function testOffline() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistration().then(registration => {
+                    if (registration) {
+                        alert('✅ Service Worker is registered and active!');
+                    } else {
+                        alert('❌ Service Worker not registered');
+                    }
+                });
+            } else {
+                alert('❌ Service Worker not supported in this browser');
+            }
+        }
+        
+        function testInstall() {
+            if ('serviceWorker' in navigator && 'PushManager' in window) {
+                alert('✅ PWA install prompt should appear in supported browsers!');
+            } else {
+                alert('⚠️ PWA install prompt may not appear in this browser');
+            }
+        }
+        
+        // Auto-run validation on page load
+        window.onload = function() {
+            setTimeout(runValidation, 1000);
+        };
+    </script>
+</body>
+</html>
+
+

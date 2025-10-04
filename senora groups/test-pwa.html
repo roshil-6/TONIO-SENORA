@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Test - Tonio & Senora</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4A0E4E">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: linear-gradient(135deg, #D4AF37, #4A0E4E);
+            color: white;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        .logo {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+        .status {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        .pass { border-left: 5px solid #4CAF50; }
+        .fail { border-left: 5px solid #f44336; }
+        .warning { border-left: 5px solid #ff9800; }
+        button {
+            background: white;
+            color: #4A0E4E;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+        }
+        button:hover {
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <div>tonio &</div>
+            <div>senora</div>
+        </div>
+        
+        <h1>🚀 PWA Test Page</h1>
+        <p>This page tests your PWA implementation locally.</p>
+        
+        <div id="status"></div>
+        
+        <button onclick="testPWA()">🔍 Test PWA Features</button>
+        <button onclick="testOffline()">📱 Test Offline</button>
+        <button onclick="testInstall()">⬇️ Test Install</button>
+    </div>
+
+    <script>
+        function testPWA() {
+            const status = document.getElementById('status');
+            status.innerHTML = '<h2>🔍 PWA Test Results</h2>';
+            
+            const tests = [
+                {
+                    name: 'Manifest File',
+                    test: () => {
+                        const manifest = document.querySelector('link[rel="manifest"]');
+                        return manifest && manifest.href === 'manifest.json';
+                    }
+                },
+                {
+                    name: 'Service Worker Support',
+                    test: () => 'serviceWorker' in navigator
+                },
+                {
+                    name: 'Theme Color',
+                    test: () => {
+                        const theme = document.querySelector('meta[name="theme-color"]');
+                        return theme && theme.content === '#4A0E4E';
+                    }
+                },
+                {
+                    name: 'Viewport Meta',
+                    test: () => {
+                        const viewport = document.querySelector('meta[name="viewport"]');
+                        return viewport && viewport.content.includes('width=device-width');
+                    }
+                },
+                {
+                    name: 'HTTPS/Localhost',
+                    test: () => {
+                        return location.protocol === 'https:' || location.hostname === 'localhost';
+                    }
+                }
+            ];
+            
+            tests.forEach(test => {
+                const result = test.test();
+                const div = document.createElement('div');
+                div.className = `status ${result ? 'pass' : 'fail'}`;
+                div.innerHTML = `
+                    <strong>${result ? '✅' : '❌'} ${test.name}</strong>
+                    <span style="float: right;">${result ? 'PASS' : 'FAIL'}</span>
+                `;
+                status.appendChild(div);
+            });
+        }
+        
+        function testOffline() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        alert('✅ Service Worker registered successfully!');
+                    })
+                    .catch(error => {
+                        alert('❌ Service Worker registration failed: ' + error.message);
+                    });
+            } else {
+                alert('❌ Service Worker not supported');
+            }
+        }
+        
+        function testInstall() {
+            if ('serviceWorker' in navigator) {
+                alert('✅ PWA install prompt should appear in supported browsers!');
+            } else {
+                alert('⚠️ PWA install prompt may not appear in this browser');
+            }
+        }
+        
+        // Auto-run test on page load
+        window.onload = function() {
+            setTimeout(testPWA, 1000);
+        };
+    </script>
+</body>
+</html>
+
+

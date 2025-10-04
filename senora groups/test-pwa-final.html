@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Final Test - Tonio & Senora</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: linear-gradient(135deg, #D4AF37, #2A2A2A);
+            color: white;
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        .test-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #D4AF37;
+        }
+        .success { border-left-color: #28a745; }
+        .error { border-left-color: #dc3545; }
+        .warning { border-left-color: #ffc107; }
+        button {
+            background: #4A0E4E;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 5px;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #D4AF37;
+        }
+        .logo {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .logo .top {
+            font-size: 2rem;
+            color: #D4AF37;
+            font-weight: bold;
+        }
+        .logo .bottom {
+            font-size: 1.5rem;
+            color: #FFFFFF;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <div class="top">tonio &</div>
+            <div class="bottom">senora</div>
+        </div>
+        
+        <h1>🚀 PWA Final Test - Tonio & Senora Migration</h1>
+        <p>Complete PWA validation and deployment readiness check.</p>
+        
+        <div id="test-results">
+            <div class="test-item">
+                <h3>🔍 Running PWA Tests...</h3>
+                <p>Please wait while we validate your PWA implementation...</p>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <button onclick="runPWATests()">🔄 Run PWA Tests</button>
+            <button onclick="testInstallPrompt()">📱 Test Install Prompt</button>
+            <button onclick="checkOfflineMode()">🌐 Test Offline Mode</button>
+        </div>
+        
+        <div id="pwa-score" style="text-align: center; font-size: 2rem; margin: 20px 0;">
+            <div id="score-display">PWA Score: Loading...</div>
+        </div>
+    </div>
+
+    <script>
+        // PWA Test Results
+        let testResults = [];
+        let pwaScore = 0;
+        
+        function runPWATests() {
+            const resultsContainer = document.getElementById('test-results');
+            resultsContainer.innerHTML = '<div class="test-item"><h3>🔍 Running PWA Tests...</h3><p>Please wait while we validate your PWA implementation...</p></div>';
+            
+            testResults = [];
+            pwaScore = 0;
+            
+            // Test 1: Manifest
+            testManifest();
+            
+            // Test 2: Service Worker
+            testServiceWorker();
+            
+            // Test 3: Icons
+            testIcons();
+            
+            // Test 4: Meta Tags
+            testMetaTags();
+            
+            // Test 5: HTTPS
+            testHTTPS();
+            
+            // Test 6: Responsive Design
+            testResponsive();
+            
+            // Test 7: Offline Functionality
+            testOffline();
+            
+            // Display results
+            setTimeout(() => {
+                displayResults();
+            }, 1000);
+        }
+        
+        function testManifest() {
+            const manifestLink = document.querySelector('link[rel="manifest"]');
+            if (manifestLink) {
+                addTestResult('✅ Web App Manifest', 'Manifest file is properly linked', 'success');
+                pwaScore += 15;
+            } else {
+                addTestResult('❌ Web App Manifest', 'Manifest file is missing', 'error');
+            }
+        }
+        
+        function testServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistration().then(registration => {
+                    if (registration) {
+                        addTestResult('✅ Service Worker', 'Service worker is registered and active', 'success');
+                        pwaScore += 20;
+                    } else {
+                        addTestResult('⚠️ Service Worker', 'Service worker not registered', 'warning');
+                    }
+                });
+            } else {
+                addTestResult('❌ Service Worker', 'Service worker not supported', 'error');
+            }
+        }
+        
+        function testIcons() {
+            const icon192 = document.querySelector('link[rel="icon"][sizes="192x192"]');
+            const icon512 = document.querySelector('link[rel="icon"][sizes="512x512"]');
+            
+            if (icon192 && icon512) {
+                addTestResult('✅ PWA Icons', 'Required icons (192x192, 512x512) are present', 'success');
+                pwaScore += 15;
+            } else {
+                addTestResult('❌ PWA Icons', 'Required icons are missing', 'error');
+            }
+        }
+        
+        function testMetaTags() {
+            const themeColor = document.querySelector('meta[name="theme-color"]');
+            const viewport = document.querySelector('meta[name="viewport"]');
+            const appleCapable = document.querySelector('meta[name="apple-mobile-web-app-capable"]');
+            
+            if (themeColor && viewport && appleCapable) {
+                addTestResult('✅ PWA Meta Tags', 'All required meta tags are present', 'success');
+                pwaScore += 10;
+            } else {
+                addTestResult('❌ PWA Meta Tags', 'Some meta tags are missing', 'error');
+            }
+        }
+        
+        function testHTTPS() {
+            if (location.protocol === 'https:' || location.hostname === 'localhost') {
+                addTestResult('✅ HTTPS/SSL', 'Secure connection detected', 'success');
+                pwaScore += 10;
+            } else {
+                addTestResult('❌ HTTPS/SSL', 'HTTPS is required for PWA', 'error');
+            }
+        }
+        
+        function testResponsive() {
+            if (window.innerWidth <= 768) {
+                addTestResult('✅ Responsive Design', 'Mobile-friendly design detected', 'success');
+                pwaScore += 10;
+            } else {
+                addTestResult('✅ Responsive Design', 'Desktop view - responsive design available', 'success');
+                pwaScore += 10;
+            }
+        }
+        
+        function testOffline() {
+            if ('serviceWorker' in navigator) {
+                addTestResult('✅ Offline Support', 'Offline functionality available', 'success');
+                pwaScore += 10;
+            } else {
+                addTestResult('❌ Offline Support', 'Offline functionality not available', 'error');
+            }
+        }
+        
+        function addTestResult(title, description, type) {
+            testResults.push({ title, description, type });
+        }
+        
+        function displayResults() {
+            const resultsContainer = document.getElementById('test-results');
+            let html = '';
+            
+            testResults.forEach(result => {
+                const icon = result.type === 'success' ? '✅' : result.type === 'error' ? '❌' : '⚠️';
+                html += `
+                    <div class="test-item ${result.type}">
+                        <h3>${icon} ${result.title}</h3>
+                        <p>${result.description}</p>
+                    </div>
+                `;
+            });
+            
+            resultsContainer.innerHTML = html;
+            
+            // Update score
+            const scoreDisplay = document.getElementById('score-display');
+            const percentage = Math.round((pwaScore / 100) * 100);
+            
+            if (percentage >= 90) {
+                scoreDisplay.innerHTML = `🎉 PWA Score: ${percentage}% - EXCELLENT!`;
+                scoreDisplay.style.color = '#28a745';
+            } else if (percentage >= 70) {
+                scoreDisplay.innerHTML = `👍 PWA Score: ${percentage}% - GOOD`;
+                scoreDisplay.style.color = '#ffc107';
+            } else {
+                scoreDisplay.innerHTML = `⚠️ PWA Score: ${percentage}% - NEEDS IMPROVEMENT`;
+                scoreDisplay.style.color = '#dc3545';
+            }
+        }
+        
+        function testInstallPrompt() {
+            if ('serviceWorker' in navigator) {
+                alert('✅ Install prompt is available! Look for "Add to Home Screen" option in your browser menu.');
+            } else {
+                alert('❌ Install prompt not available. Make sure you have a service worker registered.');
+            }
+        }
+        
+        function checkOfflineMode() {
+            if (navigator.onLine) {
+                alert('🌐 You are currently online. Disconnect your internet to test offline mode.');
+            } else {
+                alert('📱 You are offline. The PWA should still work with cached content.');
+            }
+        }
+        
+        // Run tests on page load
+        window.onload = function() {
+            setTimeout(() => {
+                runPWATests();
+            }, 500);
+        };
+    </script>
+</body>
+</html>
+

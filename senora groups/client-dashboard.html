@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Client portal for Tonio & Senora Migration Law Firm. Manage your visa application documents and track your progress.">
+    <title>Client Portal - Tonio & Senora Migration Law Firm</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="application-name" content="TonioSenora">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="TonioSenora">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <meta name="msapplication-TileColor" content="#4A0E4E">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="theme-color" content="#4A0E4E">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512x512.png">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <link rel="shortcut icon" href="icons/icon-192x192.png">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="dashboard-body">
+    <!-- Navigation -->
+    <nav class="dashboard-nav dashboard-text">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo">
+                    <div class="logo-line-top">
+                        <span class="logo-tonio">tonio</span>
+                        <span class="logo-ampersand">&</span>
+                    </div>
+                    <span class="logo-senora">senora</span>
+                </div>
+            </div>
+            <div class="nav-user">
+                <span id="userName">Welcome, Client</span>
+                <button class="btn btn-outline btn-small" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="dashboard-layout">
+        <aside class="sidebar dashboard-text">
+            <ul class="sidebar-menu">
+                <li><a href="#dashboard" class="sidebar-link active" onclick="showSection('dashboard')">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a></li>
+                <li><a href="#documents" class="sidebar-link" onclick="showSection('documents')">
+                    <i class="fas fa-file-upload"></i> Documents
+                </a></li>
+                <li><a href="#checklist" class="sidebar-link" onclick="showSection('checklist')">
+                    <i class="fas fa-list-check"></i> Visa Checklist
+                </a></li>
+                <li><a href="#progress" class="sidebar-link" onclick="showSection('progress')">
+                    <i class="fas fa-chart-line"></i> Progress
+                </a></li>
+                <li><a href="#messages" class="sidebar-link" onclick="showSection('messages')">
+                    <i class="fas fa-envelope"></i> Messages
+                </a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content dashboard-text">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <div class="section-header">
+                    <h1>Dashboard</h1>
+                    <p>Welcome to your migration journey dashboard</p>
+                </div>
+                
+                <div class="dashboard-cards">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Application Status</h3>
+                            <span class="status-badge status-in-progress">In Progress</span>
+                        </div>
+                        <div class="card-content">
+                            <p>Your application is currently being reviewed by our legal team.</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 0%"></div>
+                            </div>
+                            <span class="progress-text">0% Complete</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Next Steps</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="empty-state">
+                                <i class="fas fa-list-check" style="font-size: 2rem; color: #D4AF37; margin-bottom: 1rem; display: block;"></i>
+                                <h4>No Next Steps Available</h4>
+                                <p>Next steps will appear here once you begin your application process.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Recent Activity</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="empty-state">
+                                <i class="fas fa-history" style="font-size: 2rem; color: #D4AF37; margin-bottom: 1rem; display: block;"></i>
+                                <h4>No Recent Activity</h4>
+                                <p>Your recent activity will appear here as you interact with the system.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Documents Section -->
+            <section id="documents" class="content-section">
+                <div class="section-header">
+                    <h1>Document Management</h1>
+                    <p>Upload and manage your visa application documents</p>
+                </div>
+
+                <!-- Country and Visa Type Selection -->
+                <div class="document-selection">
+                    <div class="selection-row">
+                        <div class="form-group">
+                            <label for="countrySelect">Select Country</label>
+                            <select id="countrySelect" onchange="updateVisaTypes()">
+                                <option value="">Choose Country</option>
+                                <option value="australia">Australia</option>
+                                <option value="canada">Canada</option>
+                                <option value="newzealand">New Zealand</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="visaTypeSelect">Select Visa Type</label>
+                            <select id="visaTypeSelect" onchange="loadDocumentChecklist()">
+                                <option value="">Choose Visa Type</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Document Checklist Container -->
+                <div id="documentChecklist" class="document-checklist-container" style="display: none;">
+                    <!-- Dynamic content will be loaded here -->
+                </div>
+
+                <!-- Upload Area -->
+                <div class="document-upload-container" id="uploadContainer" style="display: none;">
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-content">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h3>Drag & Drop Files Here</h3>
+                            <p>or click to browse files</p>
+                            <p class="file-types-info">PDF, DOC, DOCX, JPG, PNG accepted (Max 10MB)</p>
+                            <input type="file" id="fileInput" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Checklist Section -->
+            <section id="checklist" class="content-section">
+                <div class="section-header">
+                    <h1>Visa Checklist</h1>
+                    <p>Track your application requirements and document checklist</p>
+                </div>
+
+                <div class="checklist-container">
+                    <div class="country-selector">
+                        <label for="checklistCountrySelect">Select Country:</label>
+                        <select id="checklistCountrySelect" onchange="loadChecklist()">
+                            <option value="">Choose Country</option>
+                            <option value="australia">Australia</option>
+                            <option value="canada">Canada</option>
+                            <option value="newzealand">New Zealand</option>
+                        </select>
+                    </div>
+
+                    <div id="checklistContent" class="checklist-content">
+                        <div style="text-align: center; padding: 3rem; color: #666;">
+                            <i class="fas fa-list-check" style="font-size: 3rem; color: #D4AF37; margin-bottom: 1rem; display: block;"></i>
+                            <h3>Select a country to view requirements</h3>
+                            <p>Choose your destination country to see the specific document requirements and checklist items.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Progress Section -->
+            <section id="progress" class="content-section">
+                <div class="section-header">
+                    <h1>Application Progress</h1>
+                    <p>Track your migration journey</p>
+                </div>
+
+                <div class="progress-timeline">
+                    <div class="empty-state">
+                        <i class="fas fa-timeline" style="font-size: 3rem; color: #D4AF37; margin-bottom: 1rem; display: block;"></i>
+                        <h3>No Progress Timeline</h3>
+                        <p>Your application progress will be tracked here once you begin the process.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Messages Section -->
+            <section id="messages" class="content-section">
+                <div class="section-header">
+                    <h1>Messages</h1>
+                    <p>Communicate with your legal team</p>
+                </div>
+
+                <div class="messages-container">
+                    <div class="empty-state">
+                        <i class="fas fa-envelope" style="font-size: 3rem; color: #D4AF37; margin-bottom: 1rem; display: block;"></i>
+                        <h3>No Messages Yet</h3>
+                        <p>Your communication with the legal team will appear here once you start your application process.</p>
+                    </div>
+
+                    <div class="message-compose">
+                        <form id="messageForm">
+                            <div class="form-group">
+                                <textarea placeholder="Type your message..." rows="3" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="client-dashboard.js"></script>
+</body>
+</html>

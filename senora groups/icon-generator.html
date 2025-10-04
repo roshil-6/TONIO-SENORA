@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PWA Icon Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        canvas { border: 1px solid #ccc; margin: 10px; }
+        button { padding: 10px 20px; margin: 5px; background: #4A0E4E; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #D4AF37; }
+    </style>
+</head>
+<body>
+    <h1>🎨 Tonio & Senora PWA Icon Generator</h1>
+    <p>Click the buttons below to generate and download the required PWA icons.</p>
+    
+    <div>
+        <h3>192x192 Icon</h3>
+        <canvas id="canvas192" width="192" height="192"></canvas><br>
+        <button onclick="generateIcon(192)">Generate 192x192</button>
+        <button onclick="downloadIcon('canvas192', 'icon-192x192.png')">Download 192x192</button>
+    </div>
+    
+    <div>
+        <h3>512x512 Icon</h3>
+        <canvas id="canvas512" width="512" height="512"></canvas><br>
+        <button onclick="generateIcon(512)">Generate 512x512</button>
+        <button onclick="downloadIcon('canvas512', 'icon-512x512.png')">Download 512x512</button>
+    </div>
+    
+    <div>
+        <button onclick="generateAll()" style="background: #D4AF37; font-size: 16px; padding: 15px 30px;">🎯 Generate All Icons</button>
+    </div>
+
+    <script>
+        function generateIcon(size) {
+            const canvas = document.getElementById(`canvas${size}`);
+            const ctx = canvas.getContext('2d');
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, size, size);
+            
+            // White background
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(0, 0, size, size);
+            
+            // Add subtle border radius
+            ctx.globalCompositeOperation = 'destination-in';
+            ctx.beginPath();
+            ctx.roundRect(0, 0, size, size, size * 0.15);
+            ctx.fill();
+            ctx.globalCompositeOperation = 'source-over';
+            
+            // Calculate text positioning
+            const centerX = size / 2;
+            const centerY = size / 2;
+            const fontSize = size * 0.12;
+            const lineHeight = fontSize * 1.2;
+            
+            // Set font
+            ctx.font = `bold ${fontSize}px Arial, sans-serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            // Draw "tonio &" (top line)
+            ctx.fillStyle = '#D4AF37'; // Gold color
+            ctx.fillText('tonio', centerX - size * 0.08, centerY - lineHeight * 0.3);
+            
+            // Draw ampersand with gavel
+            ctx.fillStyle = '#4A0E4E'; // Dark purple
+            ctx.fillText('&', centerX + size * 0.05, centerY - lineHeight * 0.3);
+            
+            // Draw gavel in ampersand
+            const gavelX = centerX + size * 0.05;
+            const gavelY = centerY - lineHeight * 0.3;
+            ctx.fillStyle = '#D4AF37';
+            // Gavel handle
+            ctx.fillRect(gavelX - size * 0.01, gavelY - size * 0.02, size * 0.008, size * 0.03);
+            // Gavel head
+            ctx.fillRect(gavelX - size * 0.015, gavelY + size * 0.01, size * 0.02, size * 0.008);
+            
+            // Draw "senora" (bottom line)
+            ctx.fillStyle = '#4A0E4E'; // Dark purple
+            ctx.fillText('senora', centerX, centerY + lineHeight * 0.3);
+            
+            // Draw curved lines from 'r' in senora
+            const rX = centerX + size * 0.02;
+            const rY = centerY + lineHeight * 0.3;
+            ctx.strokeStyle = '#D4AF37';
+            ctx.lineWidth = size * 0.003;
+            ctx.beginPath();
+            ctx.moveTo(rX, rY + size * 0.01);
+            ctx.quadraticCurveTo(rX + size * 0.015, rY - size * 0.005, rX + size * 0.025, rY - size * 0.01);
+            ctx.stroke();
+            
+            // Second curved line
+            ctx.beginPath();
+            ctx.moveTo(rX, rY + size * 0.008);
+            ctx.quadraticCurveTo(rX + size * 0.012, rY - size * 0.003, rX + size * 0.02, rY - size * 0.008);
+            ctx.stroke();
+        }
+        
+        function generateAll() {
+            generateIcon(192);
+            generateIcon(512);
+        }
+        
+        function downloadIcon(canvasId, filename) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+        
+        // Generate icons on page load
+        window.onload = function() {
+            generateAll();
+        };
+    </script>
+</body>
+</html>
